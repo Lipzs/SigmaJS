@@ -1,9 +1,10 @@
 import knex from 'knex';
+import dotenv from 'dotenv';
 
-require('dotenv').config();
+dotenv.config();
 
 const db = knex({
-  client: 'mysql2',
+  client: 'pg',
   connection: {
     host: process.env.HOST,
     user: process.env.USUARIO,
