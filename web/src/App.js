@@ -7,7 +7,7 @@ const myTheme = {
   styles: {
     global: {
       body: {
-        backgroundColor: '#e3e1e1',
+        backgroundColor: '#8EE4AF',
         margin: '0',
         padding: '0',
         boxSizing: 'border-box',
