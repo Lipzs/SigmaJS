@@ -1,0 +1,14 @@
+:root {
+  --first-color: #5CDB95;
+  --darker-green: #379683;
+  --bright-green: #8EE4AF;
+  --grey-color: #EDF5E1;
+  --blue-color: #05386B;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
