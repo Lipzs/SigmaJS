@@ -74,31 +74,23 @@ class QuestController {
 
   async answers(req, res) {
     const { stack } = req.body;
-//console.log(stack[0].id_question)
+    let hits = 0;
 
     let alternativeArray = [];
 
     for (let i = 0; i < stack.length; i++) {
-      const answeredAlternative = stack[i].alternatives.filter((alternative) =>{
-        //console.log(alternative.alternative_value)
-        //console.log(stack[i].userAnswer)
+      const answeredAlternative = stack[i].alternatives.filter((alternative) => {
         return alternative.alternative_value == stack[i].userAnswer
-      })
+      });
      
-        alternativeArray.push(answeredAlternative[0].id_alternative) 
-        
-      //this.QuestionStack.add(stack[i])
+      alternativeArray.push(answeredAlternative[0].id_alternative);
     }
-    try {
-      console.log(alternativeArray);
-      const answer = await db("alternative")
-      //.where('correct', 'true')
-      .whereIn(
-        'id_alternative', alternativeArray
-      )
-     .select('id_alternative', 'correct');
 
-     let hits = 0;
+    try {
+
+      const answer = await db("alternative")
+        .whereIn('id_alternative', alternativeArray)
+        .select('id_alternative', 'correct');
 
       for(let alt of answer) {
         if(alt.correct) {
@@ -106,7 +98,6 @@ class QuestController {
         }
       }
 
-      console.log(answer)
       console.log("acertos: " + hits);
     } catch (error) {
       console.log(error);
