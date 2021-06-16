@@ -74,6 +74,7 @@ class QuestController {
 
   async answers(req, res) {
     const { stack } = req.body;
+
     let hits = 0;
 
     let alternativeArray = [];
@@ -99,6 +100,7 @@ class QuestController {
       }
 
       console.log("acertos: " + hits);
+
     } catch (error) {
       console.log(error);
     }

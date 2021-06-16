@@ -1,0 +1,26 @@
+.loginBox {
+  max-width: 400px;
+  max-height: 300px;
+  display: flex;
+  margin: auto;
+  margin-top: 15%;
+  align-items: center;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: #F6F6F6;
+  text-align: center;
+}
+
+.loginBox .inputGroup {
+  padding: 10px;
+}
+
+.loginBox .inputGroup .helperText {
+  color: var(--blue-color);
+}
+
+.loginButton {
+  background-color: #5CDB95;
+}
+
+
