@@ -74,20 +74,40 @@ class QuestController {
 
   async answers(req, res) {
     const { stack } = req.body;
-console.log(stack[0].id_question)
+//console.log(stack[0].id_question)
+
+    let alternativeArray = [];
+
+    for (let i = 0; i < stack.length; i++) {
+      const answeredAlternative = stack[i].alternatives.filter((alternative) =>{
+        //console.log(alternative.alternative_value)
+        //console.log(stack[i].userAnswer)
+        return alternative.alternative_value == stack[i].userAnswer
+      })
+     
+        alternativeArray.push(answeredAlternative[0].id_alternative) 
+        
+      //this.QuestionStack.add(stack[i])
+    }
     try {
+      console.log(alternativeArray);
       const answer = await db("alternative")
-        .where("correct", true)
-        .select(
-          "id_question",
-          "id_alternative")
+      //.where('correct', 'true')
+      .whereIn(
+        'id_alternative', alternativeArray
+      )
+     .select('id_alternative', 'correct');
 
+     let hits = 0;
 
-          for (let i = 0; i < stack.length; i++) {
-            this.QuestionStack.add(stack[i])
-          }
-          console.log(this.QuestionStack)
-      console.log();
+      for(let alt of answer) {
+        if(alt.correct) {
+          hits += 1;
+        }
+      }
+
+      console.log(answer)
+      console.log("acertos: " + hits);
     } catch (error) {
       console.log(error);
     }
