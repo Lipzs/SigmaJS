@@ -19,11 +19,11 @@ export default function Login() {
         <FormControl isRequired>
           <div className="inputGroup">
             <FormLabel className="loginLabel">Email</FormLabel>
-            <Input type="email" placeholder="exemplo@exemplo.com"/>
+            <Input type="email" placeholder="exemplo@exemplo.com" variant="filled"/>
           </div>
           <div className="inputGroup">
             <FormLabel className="loginLabel">Senha</FormLabel>
-            <Input type="password" placeholder="Digite sua senha" />
+            <Input type="password" placeholder="Digite sua senha" variant="filled" />
             <FormHelperText className="helperText">
               <Link to="/register">Não possui uma conta? Crie uma agora!</Link>
             </FormHelperText>
