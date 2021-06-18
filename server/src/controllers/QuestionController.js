@@ -1,16 +1,16 @@
 import db from "../database/index.js";
 import Stack from "../struct/Stack.js";
 
-class QuestController {
+class QuestionController {
 
   constructor() {
     this.QuestionStack = new Stack();
 
-    this.questions = this.questions.bind(this);
-    this.answers = this.answers.bind(this);
+    this.getQuestions = this.getQuestions.bind(this);
+    this.postAnswers = this.postAnswers.bind(this);
   }
 
-  async questions(req, res) {
+  async getQuestions(req, res) {
     try {
       const result = await db('question')
         .join('alternative', 'question.id_question', '=', 'alternative.id_question')
@@ -42,11 +42,9 @@ class QuestController {
 
       const questionsList = Object.values(resultMap);
 
-      console.log(questionsList.length);
-
-      for (let i = 0; i < questionsList.length; i++) {
+      for (let question of questionsList) {
         const questionObject = {
-          ...questionsList[i],
+          ...question,
           'userAnswer': -1,
           'pontuation': -1
         };
@@ -56,7 +54,7 @@ class QuestController {
 
       let returnedData = [];
      
-      for (let i = 0; i <= this.QuestionStack.length(); i++) {
+      for (let i = this.QuestionStack.length(); i > 0 ; i--) {
         const question = this.QuestionStack.pop();
         returnedData.push(question);
       }
@@ -72,23 +70,28 @@ class QuestController {
     }
   }
 
-  async answers(req, res) {
+  async postAnswers(req, res) {
     const { stack } = req.body;
+    const user = req.auth;
+
+    for (let question of stack) {
+      this.QuestionStack.add(question);
+    }
 
     let hits = 0;
-
     let alternativeArray = [];
 
-    for (let i = 0; i < stack.length; i++) {
-      const answeredAlternative = stack[i].alternatives.filter((alternative) => {
-        return alternative.alternative_value == stack[i].userAnswer
+    for (let i = this.QuestionStack.length(); i > 0 ; i--) {
+      const qt = this.QuestionStack.pop();
+      const answeredAlternative = qt.alternatives.filter((alternative) => {
+        return alternative.alternative_value == qt.userAnswer
       });
      
       alternativeArray.push(answeredAlternative[0].id_alternative);
     }
 
     try {
-
+      let rank = {}; 
       const answer = await db("alternative")
         .whereIn('id_alternative', alternativeArray)
         .select('id_alternative', 'correct');
@@ -99,12 +102,37 @@ class QuestController {
         }
       }
 
-      console.log("acertos: " + hits);
+      await db('ranking')
+        .insert({ scores: hits, id_player: user.id_player })
+        .returning('*')
+          .then((ranking) => {
+            rank = ranking[0];
+          })
+          .catch(err => {
+            console.log(err)
+          });
 
+      return res.status(200).json({ 
+        'acertos: ': hits,
+        'usuario' : user,
+        'ranking' : rank
+      });
     } catch (error) {
       console.log(error);
+      return res.status(400).json({ 'error': error })
+    }
+  }
+
+  async getRank(req, res) {
+    try {
+      const rankingResult = await db('ranking')
+        .select('*')
+
+      return res.status(200).json({ 'ranking': rankingResult })
+    } catch (error) {
+      console.log(error)
     }
   }
 }
 
-export default QuestController;
+export default QuestionController;

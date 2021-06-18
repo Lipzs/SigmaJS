@@ -1,6 +1,6 @@
 import express from 'express';
 import UserController from './controllers/UserController.js';
-import QuestController from './controllers/QuestController.js'
+import QuestionController from './controllers/QuestionController.js'
 
 import corsMiddleware from './middlewares/corsMiddleware.js';
 import authMiddleware from './middlewares/authMiddleware.js';
@@ -8,13 +8,13 @@ import authMiddleware from './middlewares/authMiddleware.js';
 const routes = express.Router();
 
 const userController = new UserController()
-const questController = new QuestController();
+const questionController = new QuestionController();
 
 routes.post("/signup", corsMiddleware, userController.createUser);
-routes.get("/login", corsMiddleware, userController.userLogin);
-routes.get('/user', corsMiddleware, authMiddleware, userController.getUsers);
-routes.post("/quest",corsMiddleware, questController.answers)
-routes.get("/quest", corsMiddleware, questController.questions)
+routes.post("/login", corsMiddleware, userController.userLogin);
 
+routes.post("/answers", corsMiddleware, authMiddleware, questionController.postAnswers);
+routes.get('/getRanking', corsMiddleware, authMiddleware, questionController.getRank);
+routes.get("/getQuestions", corsMiddleware, authMiddleware, questionController.getQuestions);
 
 export default routes;

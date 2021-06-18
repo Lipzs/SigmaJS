@@ -3,9 +3,11 @@ import * as jwt from '../setup/jwt.js';
 import crypto from 'crypto';
 
 class UserController {
+
   async createUser(req, res) {
     const { name, email, password } = req.body;
     let insertedUser;
+
     const response = {
       data: {},
       message: '',
@@ -50,12 +52,7 @@ class UserController {
   };
 
   async userLogin(req, res) {
-    const [, hash] = req.headers.authorization.split(' ');
-    const [ email, password ] = Buffer.from(hash, 'base64')
-      .toString()
-      .split(':');
-
-    let loggedUser;
+    const { email, password } = req.body;
 
     const pw = crypto.createHash('md5').update(password).digest('hex');
 
@@ -65,7 +62,7 @@ class UserController {
         .where('email', email)
         .andWhere('password', pw);
 
-      loggedUser = result[0];
+      let loggedUser = result[0];
 
       if (!loggedUser) {
         return res.status(401).json({ 'message': 'Usuário não autorizado' });
@@ -74,27 +71,14 @@ class UserController {
       const token = await jwt.sign({ user: loggedUser.id_player });
   
       res.status(200).json({ 
-        'user': loggedUser,
         'message': 'usuário autorizado com sucesso',
+        'user': loggedUser,
         'token': token  
       });
     } catch (error) {
       console.log(error);
     }   
   }
-
-  async getUsers(req, res) {
-    try {
-      const userResult = await db('player')
-        .select('*')
-
-      console.log(userResult);
-      return res.status(200).json({ 'result': userResult });
-    } catch (error) {
-      console.log(error); 
-      return res.status(500).json({ 'error': error });
-    }
-  }
-
 }
+
 export default UserController;
