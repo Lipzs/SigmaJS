@@ -1,4 +1,4 @@
-.container {
+.cadastroBoxContainer {
   height: 100vh;
   width: 100%;
   display: flex;
@@ -7,15 +7,9 @@
   align-items: center;
 }
 
-.title {
-  color: #5cdb95;
-  font-size: 25px;
-  padding-top: 20px;
-}
-
-.loginBox {
+.registerBox {
   width: 400px;
-  max-height: 325px;
+  height: 520px;
   display: flex;
   flex-direction: column;
   margin: auto;
@@ -28,11 +22,17 @@
   animation: opacity 400ms ease-in;
 }
 
-.loginBox .inputGroup {
+.title {
+  color: #5cdb95;
+  font-size: 25px;
+  padding-top: 20px;
+}
+
+.registerBox .inputGroup {
   padding: 5px;
 }
 
-.loginBox .inputGroup .helperText {
+.registerBox .inputGroup .helperText {
   padding: 10px;
   color: var(--blue-color);
 }
