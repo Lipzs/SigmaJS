@@ -15,6 +15,8 @@ import {
   DrawerCloseButton,
 } from '@chakra-ui/react';
 
+import image from '../../assets/undraw_true_friends_c94g.svg';
+
 import './styles.css';
 
 export default function Header() {
@@ -36,6 +38,7 @@ export default function Header() {
             >
               Perfil
             </MenuItem>
+            <MenuItem>Sair</MenuItem>
           </MenuList>
         </Menu>
         <Avatar
@@ -57,15 +60,26 @@ export default function Header() {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>Minha conta</DrawerHeader>
-          <DrawerBody>
-            <Avatar
-              name="Felipe Bruckmann"
-              src="https://avatars.githubusercontent.com/u/13594618?v=4"
-              size="xl"
-            />
+          <DrawerBody className="drawerBody">
+            <div className="drawerAvatar">
+              <Avatar
+                name="Felipe Bruckmann"
+                src="https://avatars.githubusercontent.com/u/13594618?v=4"
+                size="xl"
+              />
+            </div>
+            <div className="name">
+              <label>Nome</label>
+              <p>Felipe Bruckmann</p>
+            </div>
+            <div className="email">
+              <label>E-mail</label>
+              <p>felipebruckmann@hotmail.com.br</p>
+            </div>
+            <div className="drawerImg"></div>
           </DrawerBody>
-          <DrawerFooter>
-           
+          <DrawerFooter className="drawerFooter">
+            <img src={image} alt="Duas crianças indo para escola" />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
