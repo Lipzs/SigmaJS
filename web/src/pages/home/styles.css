@@ -1,0 +1,30 @@
+.homeContainer {
+  height: 90vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center
+}
+
+.buttonsContainer {
+  width: 600px;
+  max-width: 700px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.play, .rank {
+  width: 250px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: solid 5px #F6F6F6;
+  background-color: #5CDB95;
+  font-size: 26px;
+  color: #05386B;
+  cursor: pointer;
+}

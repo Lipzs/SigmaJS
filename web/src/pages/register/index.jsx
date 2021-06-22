@@ -11,7 +11,7 @@ import {
 
 import "./styles.css";
 
-export default function Login() {
+export default function Register() {
   return (
     <div className="container">
       <div className="registerBox">
@@ -19,21 +19,22 @@ export default function Login() {
           <FormControl isRequired>
             <div className="inputGroup">
               <FormLabel className="loginLabel">Nome</FormLabel>
-              <Input type="text" placeholder="Digite seu nome" />
+              <Input type="text" placeholder="Digite seu nome" variant="filled"/>
             </div>
             <div className="inputGroup">
               <FormLabel className="loginLabel">Email</FormLabel>
-              <Input type="email" placeholder="exemplo@exemplo.com" />
+              <Input type="email" placeholder="exemplo@exemplo.com" variant="filled"/>
             </div>
             <div className="inputGroup">
               <FormLabel className="loginLabel">Senha</FormLabel>
-              <Input type="password" placeholder="Digite sua senha" />
+              <Input type="password" placeholder="Digite sua senha" variant="filled" />
             </div>
             <div className="inputGroup">
               <FormLabel className="loginLabel">Url da foto</FormLabel>
               <Input
                 type="text"
                 placeholder="https://github.com/user-profile.png"
+                variant="filled"
               />
               <FormHelperText className="helperText">
                 <Link to="/login">Já possui uma conta? Clique aqui para se logar!</Link>

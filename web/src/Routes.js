@@ -1,15 +1,15 @@
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import Login from "./pages/login";
-import Cadastro from "./pages/register";
+import Register from "./pages/register";
+import Home from './pages/home';
 
 export default function Routes() {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/login" component={Login} />
-      </Switch>
-      <Switch>
-        <Route exact path="/register" component={Cadastro} />
+        <Route exact path="/register" component={Register} />
+        <Route exact path="/home" component={Home} />
       </Switch>
     </BrowserRouter>
   );
