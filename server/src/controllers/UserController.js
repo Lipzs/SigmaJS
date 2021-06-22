@@ -5,7 +5,7 @@ import crypto from 'crypto';
 class UserController {
 
   async createUser(req, res) {
-    const { name, email, password } = req.body;
+    const { name, email, password, urlPhoto } = req.body;
     let insertedUser;
 
     const response = {
@@ -18,7 +18,7 @@ class UserController {
 
     try {
       await db('player')
-        .insert({ name: name, email: email, password: pw })
+        .insert({ name: name, email: email, password: pw, photo: urlPhoto })
         .returning('*')
         .then((user) => {
           const { password, ...us } = user[0];
@@ -58,11 +58,11 @@ class UserController {
 
     try {
       const result = await db('player')
-        .select('id_player', 'name')
+        .select('*')
         .where('email', email)
         .andWhere('password', pw);
 
-      let loggedUser = result[0];
+      const { password, ...loggedUser } = result[0];
 
       if (!loggedUser) {
         return res.status(401).json({ 'message': 'Usuário não autorizado' });
