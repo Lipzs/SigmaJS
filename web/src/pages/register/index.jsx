@@ -37,7 +37,7 @@ export default function Register() {
                 variant="filled"
               />
               <FormHelperText className="helperText">
-                <Link to="/login">Já possui uma conta? Clique aqui para se logar!</Link>
+                <Link to="/">Já possui uma conta? Clique aqui para se logar!</Link>
               </FormHelperText>
             </div>
             <Button colorScheme="whatsapp">Criar</Button>
