@@ -17,8 +17,7 @@ class QuestionController {
         .select('question.id_question',
           'question.question_enunciation',    
           'alternative.id_alternative',
-          'alternative.alternative_value',
-          'alternative.correct'
+          'alternative.alternative_value'
         );
 
       const resultMap = result.reduce((result, row) => {
@@ -29,13 +28,11 @@ class QuestionController {
 
         result[row.id_question].alternatives.push({
           'id_alternative': row.id_alternative,
-          'alternative_value': row.alternative_value,
-          'correct': row.correct
+          'alternative_value': row.alternative_value
         });
 
         delete result[row.id_question].id_alternative;
         delete result[row.id_question].alternative_value;
-        delete result[row.id_question].correct;
 
         return result;
       }, {});
@@ -45,8 +42,8 @@ class QuestionController {
       for (let question of questionsList) {
         const questionObject = {
           ...question,
-          'userAnswer': -1,
-          'pontuation': -1
+          'userAnswer': 0,
+          'pontuation': 0
         };
 
         this.QuestionStack.add(questionObject);
