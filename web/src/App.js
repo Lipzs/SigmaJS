@@ -1,6 +1,7 @@
 import Routes from './Routes';
-import './global/styles.css';
+import AuthProvider from './contexts/authContext';
 import { ChakraProvider, theme } from '@chakra-ui/react';
+import './global/styles.css';
 
 const myTheme = {
   ...theme,
@@ -18,9 +19,12 @@ const myTheme = {
 };
 
 export default function App() {
+
   return (
-    <ChakraProvider theme={myTheme}>
-      <Routes />
-    </ChakraProvider>
+    <AuthProvider >
+      <ChakraProvider theme={myTheme}>
+        <Routes />
+      </ChakraProvider>
+    </AuthProvider>
   );
 }
