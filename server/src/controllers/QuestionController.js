@@ -1,13 +1,18 @@
 import db from "../database/index.js";
 import Stack from "../struct/Stack.js";
+import Queue from '../struct/Queue.js';
+import ordenator from "../utils/ordenator.js";
+import { shuffleArray } from '../utils/ordenator.js';
 
 class QuestionController {
 
   constructor() {
     this.QuestionStack = new Stack();
+    this.rankingQueue = new Queue(); 
 
     this.getQuestions = this.getQuestions.bind(this);
     this.postAnswers = this.postAnswers.bind(this);
+    this.getRank = this.getRank.bind(this);
   }
 
   async getQuestions(req, res) {
@@ -19,6 +24,10 @@ class QuestionController {
           'alternative.id_alternative',
           'alternative.alternative_value'
         );
+
+      if (!result) {
+        return res.status(400).json({ 'message': 'Não foi encontrado resultados' });
+      }
 
       const resultMap = result.reduce((result, row) => {
         result[row.id_question] = result[row.id_question] || {
@@ -93,39 +102,68 @@ class QuestionController {
         .whereIn('id_alternative', alternativeArray)
         .select('id_alternative', 'correct');
 
-      for(let alt of answer) {
+      for (let alt of answer) {
         if(alt.correct) {
           hits += 1;
         }
       }
 
       await db('ranking')
-        .insert({ scores: hits, id_player: user.id_player })
+        .insert({ 
+          scores: hits, 
+          id_player: user.id_player,
+          player_name: user.name
+        })
         .returning('*')
           .then((ranking) => {
             rank = ranking[0];
           })
           .catch(err => {
-            console.log(err)
+            console.log(err);
+            return res.status(500).json({ 'message': 'ocorreu um erro inesperado' });
           });
 
       return res.status(200).json({ 
-        'acertos: ': hits,
-        'usuario' : user,
         'ranking' : rank
       });
     } catch (error) {
       console.log(error);
-      return res.status(400).json({ 'error': error })
+      return res.status(400).json({ 
+        'message': 'Ocorreu um erro ao inserir o ranking',
+        'error': error
+      });
     }
   }
 
   async getRank(req, res) {
+
+    const ordenation = req.query['orderBy'];
+    let rankingArray = [];
+    let rankingShuffle;
+
     try {
       const rankingResult = await db('ranking')
         .select('*')
+        .orderBy('scores', 'desc')
+        .limit(10)
 
-      return res.status(200).json({ 'ranking': rankingResult })
+      if (rankingResult.length > 0) {
+        rankingShuffle = shuffleArray(rankingResult);
+      }  
+
+      for (let rank of rankingShuffle) {
+        this.rankingQueue.enqueue(rank);
+      }
+
+      if (!this.rankingQueue.isEmpty()) {
+        for (let i = this.rankingQueue.length(); i > 0; i--) {
+          rankingArray.push(this.rankingQueue.dequeue());
+        }
+      }
+
+      ordenator(ordenation, rankingArray);
+
+      return res.status(200).json({ 'ranking': rankingArray })
     } catch (error) {
       console.log(error)
     }

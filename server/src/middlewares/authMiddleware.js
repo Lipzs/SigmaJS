@@ -2,6 +2,11 @@ import * as jwt from '../setup/jwt.js';
 import db from '../database/index.js';
 
 const authMiddleware = async (req, res, next) => {
+
+  if (!req.headers.authorization) {
+    return res.status(400).json({ 'error': 'Authorization not provided' })
+  }
+
   const [, token] = req.headers.authorization.split(' ');
 
   try {

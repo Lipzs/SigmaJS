@@ -14,7 +14,9 @@ class UserController {
       error: false
     };
 
-    const pw = crypto.createHash('md5').update(password).digest('hex');
+    const pw = crypto.createHash('sha256')
+      .update(password)
+      .digest('hex');
 
     try {
       await db('player')
@@ -54,7 +56,9 @@ class UserController {
   async userLogin(req, res) {
     const { email, password } = req.body;
 
-    const pw = crypto.createHash('md5').update(password).digest('hex');
+    const pw = crypto.createHash('sha256')
+      .update(password)
+      .digest('hex');
 
     try {
       const result = await db('player')
@@ -62,11 +66,11 @@ class UserController {
         .where('email', email)
         .andWhere('password', pw);
 
-      const { password, ...loggedUser } = result[0];
-
-      if (!loggedUser) {
+      if (!result[0]) {
         return res.status(401).json({ 'message': 'Usuário não autorizado' });
-      }  
+      }
+
+      const { password, ...loggedUser } = result[0];
 
       const token = await jwt.sign({ user: loggedUser.id_player });
   
