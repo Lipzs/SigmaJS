@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../contexts/authContext';
 import {
   Avatar,
   Menu,
@@ -21,6 +23,13 @@ import './styles.css';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const { currentUser, setCurrentUser } = useAuth();
+  const history = useHistory();
+
+  function logout() {
+    history.push('/');
+    setCurrentUser(null);
+  }
 
   return (
     <div className="header">
@@ -29,7 +38,7 @@ export default function Header() {
       </div>
       <div className="user">
         <Menu>
-          <MenuButton as={Button}>Felipe Bruckmann</MenuButton>
+          <MenuButton as={Button}>{currentUser.name}</MenuButton>
           <MenuList>
             <MenuItem
               onClick={() => {
@@ -38,12 +47,18 @@ export default function Header() {
             >
               Perfil
             </MenuItem>
-            <MenuItem>Sair</MenuItem>
+            <MenuItem
+              onClick={() => {
+                logout();
+              }}
+            >
+              Sair
+            </MenuItem>
           </MenuList>
         </Menu>
         <Avatar
-          name="Felipe Bruckmann"
-          src="https://avatars.githubusercontent.com/u/13594618?v=4"
+          name={currentUser.name}
+          src={currentUser.photo ? currentUser.photo : ''}
           size="md"
         />
       </div>
@@ -63,18 +78,18 @@ export default function Header() {
           <DrawerBody className="drawerBody">
             <div className="drawerAvatar">
               <Avatar
-                name="Felipe Bruckmann"
-                src="https://avatars.githubusercontent.com/u/13594618?v=4"
+                name={currentUser.name}
+                src={currentUser.photo ? currentUser.photo : ''}
                 size="xl"
               />
             </div>
             <div className="name">
               <label>Nome</label>
-              <p>Felipe Bruckmann</p>
+              <p>{currentUser.name}</p>
             </div>
             <div className="email">
               <label>E-mail</label>
-              <p>felipebruckmann@hotmail.com.br</p>
+              <p>{currentUser.email}</p>
             </div>
             <div className="drawerImg"></div>
           </DrawerBody>
