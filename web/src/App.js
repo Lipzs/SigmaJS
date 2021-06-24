@@ -19,9 +19,8 @@ const myTheme = {
 };
 
 export default function App() {
-
   return (
-    <AuthProvider >
+    <AuthProvider  >
       <ChakraProvider theme={myTheme}>
         <Routes />
       </ChakraProvider>

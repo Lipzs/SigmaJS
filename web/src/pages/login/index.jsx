@@ -17,14 +17,14 @@ import './styles.css';
 export default function Login(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [ isSubmitting, setIsSubmitting ] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const history = useHistory();
   const { setCurrentUser } = useAuth();
 
   async function submitLogin(e) {
     try {
-      e.preventDefault()
+      e.preventDefault();
       setIsSubmitting(true);
       const loginResponse = await apiService.post('/login', {
         email,
@@ -33,7 +33,7 @@ export default function Login(props) {
 
       const user = loginResponse.data.user;
       setCurrentUser(user);
-      sessionStorage.setItem('user', user);
+      localStorage.setItem('TOKEN', loginResponse.data.token);
       history.push('/home');
     } catch (error) {
       console.log(error);
@@ -45,7 +45,12 @@ export default function Login(props) {
     <div className="container">
       <div className="loginBox">
         <Box className="title">LOGIN</Box>
-        <form action="" onSubmit={(e) => {submitLogin(e)}}>
+        <form
+          action=""
+          onSubmit={(e) => {
+            submitLogin(e);
+          }}
+        >
           <FormControl isRequired>
             <div className="inputGroup">
               <FormLabel className="loginLabel">Email</FormLabel>
@@ -69,10 +74,16 @@ export default function Login(props) {
                 }}
               />
               <FormHelperText className="helperText">
-                <Link to="/register">Não possui uma conta? Crie uma agora!</Link>
+                <Link to="/register">
+                  Não possui uma conta? Crie uma agora!
+                </Link>
               </FormHelperText>
             </div>
-            <Button type="submit" colorScheme="whatsapp" isLoading={isSubmitting}>
+            <Button
+              type="submit"
+              colorScheme="whatsapp"
+              isLoading={isSubmitting}
+            >
               Entrar
             </Button>
           </FormControl>

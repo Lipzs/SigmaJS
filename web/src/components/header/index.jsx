@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import {useAuth} from '../../contexts/authContext'
+import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../contexts/authContext';
 import {
   Avatar,
   Menu,
@@ -22,7 +23,13 @@ import './styles.css';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const { currentUser } = useAuth();
+  const { currentUser, setCurrentUser } = useAuth();
+  const history = useHistory();
+
+  function logout() {
+    history.push('/');
+    setCurrentUser(null);
+  }
 
   return (
     <div className="header">
@@ -40,12 +47,18 @@ export default function Header() {
             >
               Perfil
             </MenuItem>
-            <MenuItem>Sair</MenuItem>
+            <MenuItem
+              onClick={() => {
+                logout();
+              }}
+            >
+              Sair
+            </MenuItem>
           </MenuList>
         </Menu>
         <Avatar
           name={currentUser.name}
-          src={currentUser.photo ? currentUser.photo : "" }
+          src={currentUser.photo ? currentUser.photo : ''}
           size="md"
         />
       </div>
@@ -66,7 +79,7 @@ export default function Header() {
             <div className="drawerAvatar">
               <Avatar
                 name={currentUser.name}
-                src={currentUser.photo ? currentUser.photo : "" }
+                src={currentUser.photo ? currentUser.photo : ''}
                 size="xl"
               />
             </div>
