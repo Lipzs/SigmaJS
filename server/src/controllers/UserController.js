@@ -2,6 +2,8 @@ import db from '../database/index.js';
 import * as jwt from '../setup/jwt.js';
 import crypto from 'crypto';
 
+import verifyEmail from '../utils/verifyEmail.js';
+
 class UserController {
 
   async createUser(req, res) {
@@ -18,6 +20,12 @@ class UserController {
       .update(password)
       .digest('hex');
 
+      if (!verifyEmail(email)) {
+        return res.status(400).json({
+          Response: 'O campo email não esta preenchido corretamente.',
+        });
+      }
+
     try {
       await db('player')
         .insert({ name: name, email: email, password: pw, photo: urlPhoto })
@@ -32,8 +40,17 @@ class UserController {
           response.data = err
         });
 
+      if(response.data.code == 23505){
+        return res.status(400).json({
+          'message': 'Este email já foi cadastrado'
+       });
+      }
+
       if (response.error) {
-        return res.status(500).json({ 'message': response.message });
+        return res.status(500).json({
+           'message': response.message,
+           'error': response.data
+        });
       }
 
       response.data = insertedUser;
@@ -64,10 +81,13 @@ class UserController {
       const result = await db('player')
         .select('*')
         .where('email', email)
-        .andWhere('password', pw);
 
       if (!result[0]) {
-        return res.status(401).json({ 'message': 'Usuário não autorizado' });
+        return res.status(401).json({ 'message': 'Usuário não cadastrado' });
+      }
+
+      if (result[0].password != pw) {
+        return res.status(401).json({ 'message': 'Senha incorreta' });
       }
 
       const { password, ...loggedUser } = result[0];
@@ -80,7 +100,10 @@ class UserController {
         'token': token  
       });
     } catch (error) {
-      console.log(error);
+      return res.status(500).json({
+        'message': 'Ocorreu um erro inesperado',
+        'error': error
+      })
     }   
   }
 }
