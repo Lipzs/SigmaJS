@@ -10,6 +10,7 @@ import {
   FormHelperText,
   Button,
   Box,
+  useToast,
 } from '@chakra-ui/react';
 
 import './styles.css';
@@ -18,6 +19,8 @@ export default function Login(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUserInvalid, setIsUserInvalid] = useState(false);
+  const toast = useToast();
 
   const history = useHistory();
   const { setCurrentUser } = useAuth();
@@ -36,8 +39,15 @@ export default function Login(props) {
       localStorage.setItem('TOKEN', loginResponse.data.token);
       history.push('/home');
     } catch (error) {
-      console.log(error);
-      // TODO -> Fazer lógica de erro
+      if (error.response) {
+        setIsUserInvalid(true);
+        toast({
+          title: `Email ou senha incorretos`,
+          status: 'error',
+          isClosable: true,
+        });
+      }
+      setIsSubmitting(false);
     }
   }
 
@@ -58,7 +68,9 @@ export default function Login(props) {
                 type="email"
                 placeholder="exemplo@exemplo.com"
                 variant="filled"
+                isInvalid={isUserInvalid}
                 onChange={(e) => {
+                  setIsUserInvalid(false);
                   setEmail(e.target.value);
                 }}
               />
@@ -69,7 +81,9 @@ export default function Login(props) {
                 type="password"
                 placeholder="Digite sua senha"
                 variant="filled"
+                isInvalid={isUserInvalid}
                 onChange={(e) => {
+                  setIsUserInvalid(false);
                   setPassword(e.target.value);
                 }}
               />
