@@ -1,0 +1,39 @@
+.ranking-group {
+  display: flex;
+  background: #5cdb95;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  margin: 5px 10px;
+  height: 150px;
+}
+
+.ranking-group:hover {
+  height: 160px;
+  background: #7ec29c;
+}
+
+.rank-rows {
+  margin: 5px;
+}
+
+.photo {
+  background: #fff;
+  border-radius: 50px;
+  width: 90px;
+  height: 90px;
+  margin: 0 25px;
+}
+
+.name {
+  flex: 6;
+}
+
+.pontuacao {
+  flex: 1;
+}
+
+#rank-title {
+  font-size: 25px;
+  padding: 20px;
+}
