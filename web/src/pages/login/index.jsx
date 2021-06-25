@@ -19,8 +19,7 @@ export default function Login(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
-  const [isEmailInvalid, setIsEmailInvalid] = useState(false);
+  const [isUserInvalid, setIsUserInvalid] = useState(false);
   const toast = useToast();
 
   const history = useHistory();
@@ -41,14 +40,9 @@ export default function Login(props) {
       history.push('/home');
     } catch (error) {
       if (error.response) {
-        if (error.response.data.message === 'Usuário não cadastrado') {
-          setIsEmailInvalid(true);
-          console.log('teste');
-        } else if (error.response.data.message === 'Senha incorreta') {
-          setIsPasswordInvalid(true);
-        }
+        setIsUserInvalid(true);
         toast({
-          title: `${error.response.data.message}`,
+          title: `Email ou senha incorretos`,
           status: 'error',
           isClosable: true,
         });
@@ -74,9 +68,9 @@ export default function Login(props) {
                 type="email"
                 placeholder="exemplo@exemplo.com"
                 variant="filled"
-                isInvalid={isEmailInvalid}
+                isInvalid={isUserInvalid}
                 onChange={(e) => {
-                  setIsEmailInvalid(false);
+                  setIsUserInvalid(false);
                   setEmail(e.target.value);
                 }}
               />
@@ -87,9 +81,9 @@ export default function Login(props) {
                 type="password"
                 placeholder="Digite sua senha"
                 variant="filled"
-                isInvalid={isPasswordInvalid}
+                isInvalid={isUserInvalid}
                 onChange={(e) => {
-                  setIsPasswordInvalid(false);
+                  setIsUserInvalid(false);
                   setPassword(e.target.value);
                 }}
               />
