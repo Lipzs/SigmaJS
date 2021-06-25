@@ -1,8 +1,9 @@
-import db from "../database/index.js";
-import Stack from "../struct/Stack.js";
+import db from '../database/index.js';
+import Stack from '../struct/Stack.js';
 import Queue from '../struct/Queue.js';
-import ordenator from "../utils/ordenator.js";
+import ordenator from '../utils/ordenator.js';
 import { shuffleArray } from '../utils/ordenator.js';
+import verifyAnswers from '../utils/verifyAnswers.js';
 
 class QuestionController {
 
@@ -80,6 +81,12 @@ class QuestionController {
     const { stack } = req.body;
     const user = req.auth;
 
+    if (verifyAnswers(stack)) {
+      return res.status(400).json({
+        Response: 'Por favor preencha todos os campos'
+      });
+    }
+
     for (let question of stack) {
       this.QuestionStack.add(question);
     }
@@ -98,14 +105,34 @@ class QuestionController {
 
     try {
       let rank = {}; 
-      const answer = await db("alternative")
+      let idAlternativeCorrectList = [];
+
+      const answer = await db('alternative')
         .whereIn('id_alternative', alternativeArray)
         .select('id_alternative', 'correct');
 
       for (let alt of answer) {
         if(alt.correct) {
-          hits += 1;
+          idAlternativeCorrectList.push(alt.id_alternative);
         }
+      }
+
+      for (let question of stack) {
+        if (question.alternatives.some(item => {
+            return idAlternativeCorrectList.includes(item.id_alternative);
+          })) {
+          question.pontuation = 1;
+        } else {
+          question.pontuation = 0;
+        }
+
+        this.QuestionStack.add(question);
+      }
+
+      for (let i = this.QuestionStack.length(); i > 0 ; i--) {
+        const qt = this.QuestionStack.pop();
+      
+        hits += qt.pontuation;
       }
 
       await db('ranking')
@@ -165,7 +192,12 @@ class QuestionController {
 
       return res.status(200).json({ 'ranking': rankingArray })
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      
+      return res.status(500).json({ 
+        'messagem': 'Ocorreu um erro inesperado',
+        'error': error 
+      });
     }
   }
 }
