@@ -10,6 +10,7 @@ import {
   FormHelperText,
   Button,
   Box,
+  useToast,
 } from '@chakra-ui/react';
 
 import './styles.css';
@@ -18,6 +19,9 @@ export default function Login(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
+  const [isEmailInvalid, setIsEmailInvalid] = useState(false);
+  const toast = useToast();
 
   const history = useHistory();
   const { setCurrentUser } = useAuth();
@@ -36,8 +40,20 @@ export default function Login(props) {
       localStorage.setItem('TOKEN', loginResponse.data.token);
       history.push('/home');
     } catch (error) {
-      console.log(error);
-      // TODO -> Fazer lógica de erro
+      if (error.response) {
+        if (error.response.data.message === 'Usuário não cadastrado') {
+          setIsEmailInvalid(true);
+          console.log('teste');
+        } else if (error.response.data.message === 'Senha incorreta') {
+          setIsPasswordInvalid(true);
+        }
+        toast({
+          title: `${error.response.data.message}`,
+          status: 'error',
+          isClosable: true,
+        });
+      }
+      setIsSubmitting(false);
     }
   }
 
@@ -58,7 +74,9 @@ export default function Login(props) {
                 type="email"
                 placeholder="exemplo@exemplo.com"
                 variant="filled"
+                isInvalid={isEmailInvalid}
                 onChange={(e) => {
+                  setIsEmailInvalid(false);
                   setEmail(e.target.value);
                 }}
               />
@@ -69,7 +87,9 @@ export default function Login(props) {
                 type="password"
                 placeholder="Digite sua senha"
                 variant="filled"
+                isInvalid={isPasswordInvalid}
                 onChange={(e) => {
+                  setIsPasswordInvalid(false);
                   setPassword(e.target.value);
                 }}
               />
