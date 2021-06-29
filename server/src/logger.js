@@ -10,13 +10,6 @@ const logConfiguration = {
     new winston.transports.File({
       filename: './logs/info.log'
     }),
-    new winston.transports.Console({
-      level: 'silly',
-      prettyPrint: true,
-      colorize: true,
-      silent: false,
-      timestamp: false
-    })
   ]
 };
 
