@@ -40,7 +40,9 @@ export default function Register() {
         localStorage.setItem('TOKEN', signUpResponse.data.token);
         history.push('/home');
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

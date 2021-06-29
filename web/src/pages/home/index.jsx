@@ -37,7 +37,7 @@ export default function Home() {
           </div>
          {rank.slice(0,5).map(player => {
            return (
-            <RankingGroup name={player.player_name} srcPhoto="" points={player.scores} />
+            <RankingGroup name={player.player_name} srcPhoto={player.photo} points={player.scores} />
            );
          })}
           
