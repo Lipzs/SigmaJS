@@ -1,39 +1,33 @@
-.ranking-group {
+.rankItem {
   display: flex;
-  background: #5cdb95;
-  justify-content: center;
   align-items: center;
-  border-radius: 5px;
-  margin: 5px 10px;
-  height: 150px;
+  background-color: var(--first-color);
+  height: 60px;
+  width: 90%;
+  margin: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
 
-.ranking-group:hover {
-  height: 160px;
-  background: #7ec29c;
+.rankItem .rankPhoto {
+  margin-left: 15px;
 }
 
-.rank-rows {
-  margin: 5px;
+.rankItem .rankInfos {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  justify-content: space-between;
+  padding: 0 40px 0 15px;
 }
 
-.photo {
-  background: #fff;
-  border-radius: 50px;
-  width: 90px;
-  height: 90px;
-  margin: 0 25px;
+.rankItem .rankInfos p {
+  font-size: 1.1rem;
+  color: var(--blue-color);
 }
 
-.name {
-  flex: 6;
-}
-
-.pontuacao {
-  flex: 1;
-}
-
-#rank-title {
-  font-size: 25px;
-  padding: 20px;
+.rankItem .rankInfos h2 {
+  font-size: 1.8rem;
+  color: var(--blue-color);
+  font-weight: bold;
 }

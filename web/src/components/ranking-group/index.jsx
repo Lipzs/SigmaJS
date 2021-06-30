@@ -1,11 +1,20 @@
-import "./styles.css";
+import React from 'react';
+import { Avatar } from '@chakra-ui/react';
 
-export default function () {
+import './styles.css';
+
+export default function rankItem(props) {
+  const { srcPhoto, name, points } = props;
+
   return (
-    <div class="ranking-group">
-      <div class="rank-rows photo">foto</div>
-      <div class="rank-rows name">Nome</div>
-      <div class="rank-rows pontuacao">Pontuacao</div>
+    <div className="rankItem">
+      <div className="rankPhoto">
+        <Avatar src={srcPhoto} name={name} size="md" />
+      </div>
+      <div className="rankInfos">
+        <p>{name}</p>
+        <h2>{points}</h2>
+      </div>
     </div>
   );
 }
