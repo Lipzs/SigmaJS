@@ -9,29 +9,35 @@ function ordenator(ordenation, queue) {
 }
 
 function orderByName(queue) {
-  queue.sort(function (a, b) {
-    if (a.player_name > b.player_name) {
-      return 1;
+  let swapped;
+  do {
+    swapped = false;
+    for (let i = 0; i < queue.length - 1; i++) {
+      if (queue[i]['player_name'] > queue[i + 1]['player_name']) {
+        let temp = queue[i];
+        queue[i] = queue[i + 1];
+        queue[i + 1] = temp;
+        swapped = true;
+      }
     }
-    if (a.player_name < b.player_name) {
-      return -1;
-    }
-    return 0;
-  });
+  } while (swapped);
 
   return queue;
 }
 
 function orderByScore(queue) {
-  queue.sort(function (a, b) {
-    if (a.scores < b.scores) {
-      return 1;
+  let swapped;
+  do {
+    swapped = false;
+    for (let i = 0; i < queue.length - 1; i++) {
+      if (queue[i]['scores'] < queue[i + 1]['scores']) {
+        let temp = queue[i];
+        queue[i] = queue[i + 1];
+        queue[i + 1] = temp;
+        swapped = true;
+      }
     }
-    if (a.scores > b.scores) {
-      return -1;
-    }
-    return 0;
-  });
+  } while (swapped);
 
   return queue;
 }
