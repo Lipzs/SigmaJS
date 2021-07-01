@@ -97,7 +97,7 @@ class QuestionController {
     for (let i = this.QuestionStack.length(); i > 0 ; i--) {
       const qt = this.QuestionStack.pop();
       const answeredAlternative = qt.alternatives.filter((alternative) => {
-        return alternative.alternative_value == qt.userAnswer
+        return alternative.alternative_value == qt.userAnswer;
       });
      
       alternativeArray.push(answeredAlternative[0].id_alternative);
