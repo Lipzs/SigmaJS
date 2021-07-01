@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../components/header";
+import { Link } from 'react-router-dom';
 import { Container } from "@chakra-ui/react";
+
+import Header from "../../components/header";
 import RankingGroup from "../../components/ranking-group";
 
 import apiService from '../../services/apiService'
@@ -43,9 +45,11 @@ export default function Home() {
           
         </div>
         <div className="buttonsContainer">
-          <div className="play">
-            <h1>JOGAR</h1>
-          </div>
+          <Link to="/play">
+            <div className="play">
+              <h1>JOGAR</h1>
+            </div>
+          </Link>
         </div>
       </Container>
     </>

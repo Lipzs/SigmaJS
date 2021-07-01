@@ -19,8 +19,11 @@ const myTheme = {
 };
 
 export default function App() {
+
+  const user = localStorage.getItem('user');
+
   return (
-    <AuthProvider  >
+    <AuthProvider user={JSON.parse(user)} >
       <ChakraProvider theme={myTheme}>
         <Routes />
       </ChakraProvider>

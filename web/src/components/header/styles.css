@@ -4,21 +4,22 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 30px;
+  justify-content: space-between;
   background-color: #F6F6F6;
 }
 
 .logo {
   font-size: 30px;
-  margin-left: 30px;
   color: #379683 ;
 }
 
 .user {
-  width: 220px;
-  display: flex;
+  width: 100px;
   justify-content: space-between;
+  display: flex;
   align-items: center;
-  margin-right: 30px;
+  margin-right: 0 !important;
 }
 
 .drawerBody .drawerAvatar {
