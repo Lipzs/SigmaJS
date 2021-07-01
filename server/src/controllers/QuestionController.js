@@ -41,6 +41,8 @@ class QuestionController {
           'alternative_value': row.alternative_value
         });
 
+        shuffleArray(result[row.id_question].alternatives);
+
         delete result[row.id_question].id_alternative;
         delete result[row.id_question].alternative_value;
 
