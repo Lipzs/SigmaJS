@@ -1,0 +1,33 @@
+.rankItem {
+  display: flex;
+  align-items: center;
+  background-color: var(--first-color);
+  height: 60px;
+  width: 90%;
+  margin: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.rankItem .rankPhoto {
+  margin-left: 15px;
+}
+
+.rankItem .rankInfos {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  justify-content: space-between;
+  padding: 0 40px 0 15px;
+}
+
+.rankItem .rankInfos p {
+  font-size: 1.1rem;
+  color: var(--blue-color);
+}
+
+.rankItem .rankInfos h2 {
+  font-size: 1.8rem;
+  color: var(--blue-color);
+  font-weight: bold;
+}

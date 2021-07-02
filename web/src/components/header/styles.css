@@ -1,0 +1,42 @@
+.header {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  justify-content: space-between;
+  background-color: #F6F6F6;
+}
+
+.logo {
+  font-size: 30px;
+  color: #379683 ;
+}
+
+.user {
+  width: 100px;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  margin-right: 0 !important;
+}
+
+.drawerBody .drawerAvatar {
+  position: relative;
+  justify-content: center;
+  text-align: center;
+}
+
+.drawerBody {
+  text-align: center;
+}
+
+.drawerBody label {
+  color: #379683;
+  font-weight: bold;
+}
+
+.drawerBody .name, .email {
+  padding: 10px;
+}

@@ -1,0 +1,104 @@
+
+.questionContainer{
+  animation: opacity 600ms ease-in;
+}
+
+.questionBox {
+  width: 690px;
+  height: 390px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  border-radius: 8px;
+  background-color: var(--first-color);
+  border: 10px solid #f6f6f6;
+  padding: 10px;
+  margin-top: 80px;
+}
+
+
+.questionBox .questionNumber {
+  width: 30px;
+  height: 30px;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 50%;
+  color: var(--blue-color);
+  background-color: #f6f6f6;
+}
+
+.questionBox .question {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.questionBox .question h1 {
+  font-weight: bold;
+  color: var(--blue-color);
+  font-size: 28px;
+}
+
+.alternatives {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.alternativesRow {
+  display: flex;
+  width: 400px;
+  margin: auto;
+  justify-content: space-around;
+}
+
+.alternatives {
+  border: 3px solid #f6f6f6 !important;
+}
+
+.progress {
+  width: 400px;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.modal {
+  background-color: var(--first-color) !important;
+  border: 5px solid #f6f6f6;
+}
+
+.modal .pointMessage {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modal .pointMessage h2 {
+  font-size: 24px;
+  color: var(--blue-color);
+}
+
+.modal .pointImg  {
+  width: 200px;
+  margin: auto;
+}
+
+.modal .modalFooter {
+  justify-content: center;
+}
+
+.modal .modalTitle {
+  color: var(--grey-color)
+}
+
+
+@media (max-height: 800px) {
+  .questionBox {
+    margin-top: 60px;
+  }
+}
+

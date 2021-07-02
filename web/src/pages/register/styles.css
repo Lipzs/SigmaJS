@@ -1,0 +1,49 @@
+.cadastroBoxContainer {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.registerBox {
+  width: 400px;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: #F6F6F6;
+  text-align: center;
+  animation: opacity 400ms ease-in;
+}
+
+.title {
+  color: #5cdb95;
+  font-size: 25px;
+  padding-top: 20px;
+}
+
+.registerBox .inputGroup {
+  padding: 5px;
+}
+
+.registerBox .inputGroup .helperText {
+  padding: 10px;
+  color: var(--blue-color);
+}
+
+
+@keyframes opacity {
+  from {
+      opacity: 0;
+  }
+
+  to {
+      opacity: 1;
+  }
+}
