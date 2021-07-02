@@ -56,6 +56,7 @@ export default function Play() {
           setMessage('Não fique triste, tente novamente!');
           setModalImg(sad);
         } else {
+          setModalImg(happy)
           setMessage('Parabéns!!!');
         }
         onOpen();
