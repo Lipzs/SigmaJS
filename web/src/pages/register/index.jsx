@@ -7,6 +7,7 @@ import {
   FormHelperText,
   Button,
   Box,
+  useToast
 } from '@chakra-ui/react';
 
 import apiService from '../../services/apiService';
@@ -20,7 +21,9 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [urlPhoto, setUrlPhoto] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isEmailInvalid, setIsEmailInvalid ] = useState(false);
   const { setCurrentUser } = useAuth();
+  const toast = useToast();
   const history = useHistory();
 
   async function signUp(e) {
@@ -41,7 +44,15 @@ export default function Register() {
         history.push('/home');
       }
     } catch (error) {
-      console.log(error);
+      if(error.response){
+        setIsEmailInvalid(true);
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          isClosable: true,
+        });
+        setIsLoading(false);
+      };
     }
   }
 
@@ -59,7 +70,7 @@ export default function Register() {
               <FormLabel className="loginLabel">Nome</FormLabel>
               <Input
                 type="text"
-                placeholder="Digite seu nome"
+                placeholder="Digite seu nome completo"
                 variant="filled"
                 onChange={(e) => {
                   setName(e.target.value);
@@ -70,10 +81,12 @@ export default function Register() {
               <FormLabel className="loginLabel">Email</FormLabel>
               <Input
                 type="email"
+                isInvalid={isEmailInvalid}
                 placeholder="exemplo@exemplo.com"
                 variant="filled"
                 onChange={(e) => {
                   setEmail(e.target.value);
+                  setIsEmailInvalid(false);
                 }}
               />
             </div>
@@ -88,26 +101,30 @@ export default function Register() {
                 }}
               />
             </div>
-            <div className="inputGroup">
-              <FormLabel className="loginLabel">Url da foto</FormLabel>
-              <Input
-                type="text"
-                placeholder="https://github.com/user-profile.png"
-                variant="filled"
-                onChange={(e) => {
-                  setUrlPhoto(e.target.value);
-                }}
-              />
+          </FormControl>
+
+          <div className="inputGroup">
+            <FormLabel className="loginLabel">Url da foto</FormLabel>
+            <Input
+              type="text"
+              placeholder="https://github.com/user-profile.png"
+              variant="filled"
+              isRequired={false}
+              onChange={(e) => {
+                setUrlPhoto(e.target.value);
+              }}
+            />
+            <FormControl>
               <FormHelperText className="helperText">
                 <Link to="/">
                   Já possui uma conta? Clique aqui para se logar!
                 </Link>
               </FormHelperText>
-            </div>
-            <Button colorScheme="whatsapp" type="submit" isLoading={isLoading}>
-              Criar
-            </Button>
-          </FormControl>
+            </FormControl>
+          </div>
+          <Button colorScheme="whatsapp" type="submit" isLoading={isLoading}>
+            Criar
+          </Button>
         </form>
       </div>
     </div>

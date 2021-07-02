@@ -37,6 +37,7 @@ export default function Login(props) {
       const user = loginResponse.data.user;
       setCurrentUser(user);
       localStorage.setItem('TOKEN', loginResponse.data.token);
+      localStorage.setItem('user', JSON.stringify(user));
       history.push('/home');
     } catch (error) {
       if (error.response) {

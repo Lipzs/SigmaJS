@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/authContext';
+import { FiMenu, FiLogOut, FiUser } from "react-icons/fi";
 import {
   Avatar,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  Button,
+  IconButton,
   Drawer,
   DrawerBody,
   DrawerFooter,
@@ -24,6 +25,8 @@ import './styles.css';
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { currentUser, setCurrentUser } = useAuth();
+
+
   const history = useHistory();
 
   function logout() {
@@ -38,12 +41,13 @@ export default function Header() {
       </div>
       <div className="user">
         <Menu>
-          <MenuButton as={Button}>{currentUser.name}</MenuButton>
+          <MenuButton as={IconButton} icon={<FiMenu/>} />
           <MenuList>
             <MenuItem
               onClick={() => {
                 setIsOpen(true);
               }}
+              icon={<FiUser/>}
             >
               Perfil
             </MenuItem>
@@ -51,6 +55,7 @@ export default function Header() {
               onClick={() => {
                 logout();
               }}
+              icon={<FiLogOut/>}
             >
               Sair
             </MenuItem>

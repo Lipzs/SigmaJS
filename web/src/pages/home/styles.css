@@ -4,6 +4,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  animation: opacity 600ms ease-in
 }
 
 .buttonsContainer {
@@ -27,6 +28,11 @@
   font-size: 26px;
   color: #05386b;
   cursor: pointer;
+  transition: 300ms ease-out;
+}
+
+.play:hover {
+  background-color: var(--darker-green);
 }
 
 .ranking-box {
@@ -55,6 +61,16 @@
   margin: 10px 0;
 }
 
+@keyframes opacity {
+  from {
+      opacity: 0;
+  }
+
+  to {
+      opacity: 1;
+  }
+}
+
 @media (max-height: 800px) {
   .homeContainer {
     margin-top: 60px;
@@ -64,3 +80,4 @@
     margin-top: 30px;
   }
 }
+
