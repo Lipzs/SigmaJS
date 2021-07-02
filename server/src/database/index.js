@@ -1,16 +1,6 @@
-import knex from 'knex';
-import dotenv from 'dotenv';
+import knexfile from '../knexfile.js'
+import knex from 'knex'
 
-dotenv.config();
-
-const db = knex({
-  client: 'pg',
-  connection: {
-    host: process.env.HOST,
-    user: process.env.USUARIO,
-    password: process.env.SENHA,
-    database: process.env.DATABASE
-  }
-});
+const db = knex(knexfile.development)
 
 export default db;
