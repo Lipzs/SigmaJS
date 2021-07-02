@@ -174,7 +174,7 @@ class QuestionController {
         .select('ranking.id_ranking', 'ranking.player_name',
          'ranking.scores', 'player.photo')
         .orderBy('scores', 'desc')
-        .limit(10)
+        .limit(5)
 
       if (rankingResult.length > 0) {
         rankingShuffle = shuffleArray(rankingResult);
