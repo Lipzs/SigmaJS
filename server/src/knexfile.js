@@ -7,16 +7,15 @@ module.exports ={
       host: process.env.HOST,
       user: process.env.USUARIO,
       password: process.env.SENHA,
-      database: process.env.DATABASE
+      database: process.env.DATABASE,
+      connectTimeout: 90000
     },
     migrations: {
       tableName: 'knex_tables',
       directory: `${__dirname}/database/migrations`
     },
-      seeds: {
-        directory: `${__dirname}/database/seeds`
-      }
-    
-
+    seeds: {
+      directory: `${__dirname}/database/seeds`
+    }
   }
 };
