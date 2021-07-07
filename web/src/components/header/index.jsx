@@ -31,6 +31,7 @@ export default function Header() {
 
   function logout() {
     history.push('/');
+    localStorage.removeItem('user');
     setCurrentUser(null);
   }
 
