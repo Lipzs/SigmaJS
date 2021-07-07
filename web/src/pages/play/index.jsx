@@ -14,7 +14,6 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton,
   useDisclosure,
 } from '@chakra-ui/react';
 
@@ -29,9 +28,8 @@ export default function Play() {
   const [answeredQuestions, setAnsweredQuestions] = useState([]);
   const [progressValue, setProgressValue] = useState(0);
   const [score, setScore] = useState('');
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen } = useDisclosure();
   const [message, setMessage] = useState('');
-  const [modalImg, setModalImg] = useState(happy);
   const [error, setError] = useState(false);
 
   const questionsPerPage = 1;
@@ -52,19 +50,11 @@ export default function Play() {
         });
         console.log(attempt.data);
         setScore(attempt.data.ranking.scores);
-        if (score < 6) {
-          setMessage('Não fique triste, tente novamente!');
-          setModalImg(sad);
-        } else {
-          setModalImg(happy)
-          setMessage('Parabéns!!!');
-        }
         onOpen();
       } catch (error) {
-        console.log(error)
+        console.log(error);
         setMessage('Não foi possivel concluir sua tentativa');
         setError(true);
-        setModalImg(sad);
         onOpen();
       }
     }
@@ -96,7 +86,7 @@ export default function Play() {
             questionNumber * questionsPerPage,
             questionNumber * questionsPerPage + questionsPerPage
           )
-          .map((question, index) => {
+          .map((question) => {
             return (
               <>
                 <div className="questionBox">
@@ -108,9 +98,10 @@ export default function Play() {
                   </div>
                 </div>
                 <div className="alternativesRow" direction="row">
-                  {question.alternatives.map((alternative) => {
+                  {question.alternatives.map((alternative, index) => {
                     return (
                       <Button
+                        key={index}
                         className="alternatives"
                         colorScheme="whatsapp"
                         value={alternative.alternative_value}
@@ -135,21 +126,26 @@ export default function Play() {
 
       <Modal
         isCentered
-        onClose={onClose}
         isOpen={isOpen}
         motionPreset="slideInBottom"
+        closeOnOverlayClick={false}
       >
         <ModalOverlay />
         <ModalContent className="modal">
           <ModalHeader className="modalTitle">Pontuação final</ModalHeader>
-          <ModalCloseButton />
           <ModalBody>
             <div className="pointMessage">
-              <h2>{error ? 'Lamentamos,' : `Você fez um total de ${score} pontos` }</h2>
-              <h2>{message}</h2>
+              <h2>
+                {error ? 'Lamentamos,' : `Você fez um total de ${score} pontos`}
+              </h2>
+              <h2>
+                {score < 6
+                  ? 'Não fique triste, tente novamente!'
+                  : 'Parabéns!!!'}
+              </h2>
             </div>
             <div className="pointImg">
-              <img src={modalImg} alt="Parabéns" />
+              <img src={score < 6 || error ? sad : happy} alt="Parabéns" />
             </div>
           </ModalBody>
           <ModalFooter className="modalFooter">
