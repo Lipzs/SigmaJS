@@ -18,12 +18,12 @@ function fieldsMiddleware(req, res, next) {
   if (emptyFields.length == 1) {
     return res
       .status(400)
-      .json({ Response: `o campo ${emptyFields} não pode estar vázio` });
+      .json({ Response: `o campo ${emptyFields} não pode estar vazio` });
   } 
   else if (emptyFields.length > 1) {
     return res
       .status(400)
-      .json({ Response: `os campos ${emptyFields} não podem ser vázios` });
+      .json({ Response: `os campos ${emptyFields} não podem ser vazios` });
   } 
   else {
     next();
