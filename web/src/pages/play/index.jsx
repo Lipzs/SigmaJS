@@ -31,6 +31,7 @@ export default function Play() {
   const { isOpen, onOpen } = useDisclosure();
   const [message, setMessage] = useState('');
   const [error, setError] = useState(false);
+  const [disable, setDisable] = useState(false);
 
   const questionsPerPage = 1;
 
@@ -105,8 +106,11 @@ export default function Play() {
                         className="alternatives"
                         colorScheme="whatsapp"
                         value={alternative.alternative_value}
-                        onClick={(e) => {
-                          awserQuestion(e.target.value, question.id_question);
+                        disabled={disable}
+                        onClick={async (e) => {
+                          setDisable(true);
+                          await awserQuestion(e.target.value, question.id_question);
+                          setDisable(false);
                         }}
                       >
                         {alternative.alternative_value}
