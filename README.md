@@ -43,6 +43,7 @@ uma função criada pela equipe, não pode usar API.
 - Postgresql
 - Knex
 - JWT
+- Sucrase
 - Winston
 - Dotenv
 - Cors
@@ -85,8 +86,49 @@ $ npm start
 ### Banco de dados
 
 ```bash
-# Para rodar a aplicação é recomendado que você tenha o postgres instalado no computador/vm ou utilizar o AWS RDS 
+# Para rodar a aplicação é recomendado que você tenha o postgres instalado no computador/vm ou utilizar o AWS RDS. Após você ter o banco de dados, voce deve mover-se para /SigmaJS/server e criar um arquivo .env
 
-# 
+$ touch .env
 
+# Dentro do arquivo .env você deve preencher estes dados de acordo com as credenciais do seu banco de dados:
+
+HOST="" 
+USUARIO=""
+SENHA=""
+DATABASE=""
+SECRET='95ff082716bcccfe41b89da596b4e578'
+
+# Host = se estiver usuando o banco postgres local deve preencher com HOST="localhost", se estiver utilizando AWS RDS você deverá colocar o endpoint do seu RDS HOST="intanciaexemplo.rds.amazonaws.com".
+
+# Os campos USUARIO, SENHA E DATABASE você irá preencher com as credenciais nas quais você criou o banco de dados.
+
+# O campo SECRET não deve ser alterado
+
+# Após preecher o .env você deverá criar outro .env porém dentro do diretório /SigmaJS/server/src
+
+$ touch .env
+
+# Então deve preencher com as mesma credenciais do 1° .env
+
+# Após configurar os arquivos .env você deverá criar as tabelas do banco de dados então mova-se para /SigmaJS/server/src e então escreva os seguintes comandos:
+
+$ npx knex migrate:latest
+# e
+$ npx knex seed:run
+
+# Pronto agora o Banco de dados já está configurado.
+```
+------
+### FRONT-END
+
+```bash
+# Com o BACK-END e o Banco de dados já configurados, mova-se para /SigmaJS/web e então instale as dependências com o seguinte comando:
+
+$ yarn install 
+# ou
+$ npm install
+
+# Agora é só rodar o comando: 
+
+$ npm start
 ```

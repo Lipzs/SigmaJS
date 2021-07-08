@@ -64,8 +64,6 @@ class UserController {
       });
 
     } catch (error) {
-      console.log(error);
-
       res.status(500).json({ 'error': error });
     }
   };
@@ -79,7 +77,7 @@ class UserController {
     try {
       const result = await db('player')
         .select('*')
-        .where('email', email)
+        .where('email', email);
      
       if (!result[0] || result[0].password != pw) {
         return res.status(401).json({ 'message': 'Usuário ou senha incorretas' });
@@ -98,7 +96,7 @@ class UserController {
       return res.status(500).json({
         'message': 'Ocorreu um erro inesperado',
         'error': error
-      })
+      });
     }   
   }
 }
