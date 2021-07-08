@@ -64,15 +64,12 @@ class UserController {
       });
 
     } catch (error) {
-      console.log(error);
-
       res.status(500).json({ 'error': error });
     }
   };
 
   async userLogin(req, res) {
     const { email, password } = req.body;
-
     const pw = crypto.createHash('sha256')
       .update(password)
       .digest('hex');
@@ -80,14 +77,10 @@ class UserController {
     try {
       const result = await db('player')
         .select('*')
-        .where('email', email)
-
-      if (!result[0]) {
-        return res.status(401).json({ 'message': 'Usuário não cadastrado' });
-      }
-
-      if (result[0].password != pw) {
-        return res.status(401).json({ 'message': 'Senha incorreta' });
+        .where('email', email);
+     
+      if (!result[0] || result[0].password != pw) {
+        return res.status(401).json({ 'message': 'Usuário ou senha incorretas' });
       }
 
       const { password, ...loggedUser } = result[0];
@@ -103,7 +96,7 @@ class UserController {
       return res.status(500).json({
         'message': 'Ocorreu um erro inesperado',
         'error': error
-      })
+      });
     }   
   }
 }

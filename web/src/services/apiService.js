@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useAuth } from '../contexts/authContext';
 
 const apiService = axios.create({
   baseURL: 'http://localhost:3333'

@@ -19,9 +19,11 @@ export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confPassword, setConfPassword ] = useState('');
   const [urlPhoto, setUrlPhoto] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailInvalid, setIsEmailInvalid ] = useState(false);
+  const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
   const { setCurrentUser } = useAuth();
   const toast = useToast();
   const history = useHistory();
@@ -30,6 +32,17 @@ export default function Register() {
     try {
       e.preventDefault();
       setIsLoading(true);
+
+      if(password !== confPassword){
+        setIsPasswordInvalid(true);
+        toast({
+          title: 'As senhas precisam estar iguais',
+          status: 'error',
+          isClosable: true,
+        });
+        setIsLoading(false);
+        return ;
+      }
       const signUpResponse = await apiService.post('/signup', {
         name,
         email,
@@ -41,6 +54,7 @@ export default function Register() {
         const user = signUpResponse.data.user;
         setCurrentUser(user);
         localStorage.setItem('TOKEN', signUpResponse.data.token);
+        localStorage.setItem('user', JSON.stringify(user));
         history.push('/home');
       }
     } catch (error) {
@@ -96,8 +110,23 @@ export default function Register() {
                 type="password"
                 placeholder="Digite sua senha"
                 variant="filled"
+                isInvalid={isPasswordInvalid}
                 onChange={(e) => {
                   setPassword(e.target.value);
+                  setIsPasswordInvalid(false);
+                }}
+              />
+            </div>
+            <div className="inputGroup">
+              <FormLabel className="loginLabel">Confirme sua senha</FormLabel>
+              <Input
+                type="password"
+                placeholder="Digite sua senha"
+                variant="filled"
+                isInvalid={isPasswordInvalid}
+                onChange={(e) => {
+                  setConfPassword(e.target.value);
+                  setIsPasswordInvalid(false);
                 }}
               />
             </div>

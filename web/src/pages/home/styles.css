@@ -61,6 +61,11 @@
   margin: 10px 0;
 }
 
+.switchButtons {
+  color: var(--darker-green);
+  
+}
+
 @keyframes opacity {
   from {
       opacity: 0;
@@ -79,5 +84,11 @@
   .play {
     margin-top: 30px;
   }
+
+  
+  .switchButtons {
+    margin-top: 10px;
+  }
+
 }
 

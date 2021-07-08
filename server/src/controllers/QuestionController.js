@@ -74,8 +74,6 @@ class QuestionController {
         'message': 'ocorreu um erro ao executar a operação',
         'erro': error
       });
-
-      console.log(error);
     }
   }
 
@@ -143,14 +141,16 @@ class QuestionController {
           id_player: user.id_player,
           player_name: user.name
         })
-        .returning('*')
-          .then((ranking) => {
-            rank = ranking[0];
-          })
-          .catch(err => {
-            console.log(err);
-            return res.status(500).json({ 'message': 'ocorreu um erro inesperado' });
-          });
+          .returning('*')
+            .then((ranking) => {
+              rank = ranking[0];
+            })
+              .catch(err => {
+                console.log(err);
+                return res.status(500).json({
+                  'message': 'ocorreu um erro inesperado'
+                });
+              });
 
       return res.status(200).json({ 
         'ranking' : rank
@@ -168,7 +168,7 @@ class QuestionController {
 
     const ordenation = req.query['orderBy'];
     let rankingArray = [];
-    let rankingShuffle;
+    let rankingShuffle = [];
 
     try {
       const rankingResult = await db('ranking')
@@ -176,7 +176,7 @@ class QuestionController {
         .select('ranking.id_ranking', 'ranking.player_name',
          'ranking.scores', 'player.photo')
         .orderBy('scores', 'desc')
-        .limit(10)
+        .limit(5);
 
       if (rankingResult.length > 0) {
         rankingShuffle = shuffleArray(rankingResult);
@@ -194,10 +194,10 @@ class QuestionController {
 
       ordenator(ordenation, rankingArray);
 
-      return res.status(200).json({ 'ranking': rankingArray })
+      return res.status(200).json({
+        'ranking': rankingArray 
+      });
     } catch (error) {
-      console.log(error);
-      
       return res.status(500).json({ 
         'messagem': 'Ocorreu um erro inesperado',
         'error': error 

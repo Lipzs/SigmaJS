@@ -13,7 +13,10 @@ function orderByName(queue) {
   do {
     swapped = false;
     for (let i = 0; i < queue.length - 1; i++) {
-      if (queue[i]['player_name'] > queue[i + 1]['player_name']) {
+      const firstPlayerName =  queue[i]['player_name'].toUpperCase(); 
+      const secondPlayerName = queue[i + 1]['player_name'].toUpperCase(); 
+
+      if (firstPlayerName > secondPlayerName){
         let temp = queue[i];
         queue[i] = queue[i + 1];
         queue[i + 1] = temp;

@@ -31,13 +31,14 @@ export default function Header() {
 
   function logout() {
     history.push('/');
+    localStorage.removeItem('user');
     setCurrentUser(null);
   }
 
   return (
     <div className="header">
       <div className="logo">
-        <h1>SIGMA</h1>
+        <a href="/home"><h1>SIGMA</h1></a>
       </div>
       <div className="user">
         <Menu>
