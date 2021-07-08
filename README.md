@@ -9,7 +9,7 @@ O objetivo desta aplicação é desenvolver um conjunto de funcionalidades para 
 
 ------
 
-## Requisitos do Projeto
+## Requisitos do Projeto :heavy_check_mark:
 
 * Jogo desenvolvido como uma aplicação Web
 * Implementação do backend com JavaScript, Node.js, Express
@@ -40,6 +40,7 @@ uma função criada pela equipe, não pode usar API.
 
 - NodeJS
 - Express
+- ReactJS
 - Postgresql
 - Knex
 - JWT
@@ -47,10 +48,11 @@ uma função criada pela equipe, não pode usar API.
 - Winston
 - Dotenv
 - Cors
-- React
+- ChakraUI
+- Axios
 
 ```bash
-# Ferramentas de desenvolvimento: 
+# Ferramentas de desenvolvimento :wrench:
 ```
 - Nodemon
 - Postman
@@ -59,7 +61,7 @@ uma função criada pela equipe, não pode usar API.
 ------
 ## Como baixar e executar o projeto 💡
 
-### BACK-END
+### BACK-END :end:
 ```bash
 
 # Primeiramente clone o repositorio
@@ -83,14 +85,16 @@ $ npm start
 
 ```
 ------
-### Banco de dados
+### Banco de dados :bank:
 
 ```bash
-# Para rodar a aplicação é recomendado que você tenha o postgres instalado no computador/vm ou utilizar o AWS RDS. Após você ter o banco de dados, voce deve mover-se para /SigmaJS/server e criar um arquivo .env
+# Para rodar a aplicação é recomendado que você tenha o postgres instalado no computador/vm
+# ou utilizar o AWS RDS. Após criar o Banco de dados você deve mover-se para /SigmaJS/server
+# e criar um arquivo .env
 
 $ touch .env
 
-# Dentro do arquivo .env você deve preencher estes dados de acordo com as credenciais do seu banco de dados:
+# No .env você deve preencher estes dados de acordo com as credenciais do seu banco de dados:
 
 HOST="" 
 USUARIO=""
@@ -98,19 +102,23 @@ SENHA=""
 DATABASE=""
 SECRET='95ff082716bcccfe41b89da596b4e578'
 
-# Host = se estiver usuando o banco postgres local deve preencher com HOST="localhost", se estiver utilizando AWS RDS você deverá colocar o endpoint do seu RDS HOST="intanciaexemplo.rds.amazonaws.com".
+# Host = se estiver usuando o banco postgres local deve preencher com HOST="localhost",
+# se estiver utilizando AWS RDS você deverá colocar o endpoint do seu RDS
+# HOST="intanciaexemplo.rds.amazonaws.com".
 
-# Os campos USUARIO, SENHA E DATABASE você irá preencher com as credenciais nas quais você criou o banco de dados.
+# Os campos USUARIO, SENHA E DATABASE você irá preencher
+# com as credenciais nas quais você criou o banco de dados.
 
-# O campo SECRET não deve ser alterado
+# O campo SECRET não deve ser alterado.
 
-# Após preecher o .env você deverá criar outro .env porém dentro do diretório /SigmaJS/server/src
+# Agora você deverá criar outro .env porém dentro do diretório /SigmaJS/server/src
 
 $ touch .env
 
 # Então deve preencher com as mesma credenciais do 1° .env
 
-# Após configurar os arquivos .env você deverá criar as tabelas do banco de dados então mova-se para /SigmaJS/server/src e então escreva os seguintes comandos:
+# Após configurar os arquivos .env você deverá criar as tabelas do banco de dados.
+# Mova-se para /SigmaJS/server/src e então escreva os seguintes comandos:
 
 $ npx knex migrate:latest
 # e
@@ -119,10 +127,11 @@ $ npx knex seed:run
 # Pronto agora o Banco de dados já está configurado.
 ```
 ------
-### FRONT-END
+### FRONT-END :movie_camera:
 
 ```bash
-# Com o BACK-END e o Banco de dados já configurados, mova-se para /SigmaJS/web e então instale as dependências com o seguinte comando:
+# Com o BACK-END e o Banco de dados já configurados, mova-se para /SigmaJS/web 
+# e então instale as dependências com o seguinte comando:
 
 $ yarn install 
 # ou
