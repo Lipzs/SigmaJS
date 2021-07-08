@@ -38,7 +38,7 @@ export default function Header() {
   return (
     <div className="header">
       <div className="logo">
-        <h1>SIGMA</h1>
+        <a href="/home"><h1>SIGMA</h1></a>
       </div>
       <div className="user">
         <Menu>
